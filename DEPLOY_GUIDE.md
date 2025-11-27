@@ -15,24 +15,64 @@
 
 ---
 
-## BƯỚC 2: Tạo MySQL Database trên Railway.app
+## BƯỚC 2: Chuẩn bị MySQL Database
 
-**Lưu ý**: Render.com FREE không hỗ trợ MySQL, chỉ có PostgreSQL. Vì project dùng MySQL nên ta sẽ dùng Railway.app cho database (vẫn free).
+Em có 3 lựa chọn:
 
-### 2.1. Tạo tài khoản Railway
+### **Option 1: Dùng MySQL từ Hosting cPanel có sẵn (KHUYẾN NGHỊ)** ⭐
+
+Nếu em đã có hosting với cPanel + MySQL:
+
+1. **Vào cPanel → MySQL Databases**
+2. **Tạo Database mới**:
+   - Database Name: `my_app_db` (sẽ tự động thêm prefix: `thaibin2_my_app_db`)
+   - Click **Create Database**
+
+3. **Tạo MySQL User**:
+   - Username: `my_app_user` (prefix: `thaibin2_my_app_user`)
+   - Password: Generate strong password
+   - Click **Create User**
+
+4. **Add User to Database**:
+   - Select User: `thaibin2_my_app_user`
+   - Select Database: `thaibin2_my_app_db`
+   - Privileges: **ALL PRIVILEGES**
+   - Click **Add**
+
+5. **Lấy Connection String**:
+   - Host: Xem trong cPanel (thường là `localhost` hoặc `yourdomain.com`)
+   - Port: `3306` (mặc định)
+   - **Format DATABASE_URL**:
+   ```
+   mysql://thaibin2_my_app_user:your_password@yourdomain.com:3306/thaibin2_my_app_db
+   ```
+
+6. **Cho phép Remote MySQL Access** (QUAN TRỌNG):
+   - cPanel → **Remote MySQL**
+   - Add host: `%.onrender.com` (cho phép Render.com kết nối)
+   - Click **Add Host**
+
+---
+
+### **Option 2: Dùng Railway.app** (Nếu không có hosting)
+
+**Lưu ý**: Railway chỉ có $5 credit/month free (~20-25 ngày)
 
 1. Truy cập: **https://railway.app**
-2. Click **Login with GitHub**
-3. Authorize Railway
+2. Login with GitHub
+3. **New Project** → **Provision MySQL**
+4. Copy **MySQL Connection URL**
+5. **Lưu lại URL** để dùng ở Bước 3
 
-### 2.2. Tạo MySQL Database
+---
 
-1. Click **New Project** → **Provision MySQL**
-2. Database sẽ tự động tạo
-3. Click vào **MySQL service**
-4. Tab **Connect** → Copy **MySQL Connection URL**
-   - Format: `mysql://root:password@containers-us-west-xxx.railway.app:6789/railway`
-5. **LƯU LẠI URL này** để dùng ở Bước 3
+### **Option 3: Dùng Aiven.io** (100% Free Forever)
+
+1. Truy cập: **https://aiven.io**
+2. Sign up free
+3. Create **MySQL service** (Free tier: 1 node, 1GB RAM)
+4. Copy connection string
+5. **Lưu lại URL**
 
 ---
 
@@ -57,10 +97,15 @@
 
    | Key | Value | Ghi chú |
    |-----|-------|---------|
-   | `DATABASE_URL` | Paste **MySQL Connection URL** từ Railway (Bước 2) | MySQL connection string |
+   | `DATABASE_URL` | `mysql://user:pass@host:3306/dbname` | MySQL từ hosting/Railway/Aiven |
    | `NEXTAUTH_SECRET` | Generate bằng lệnh bên dưới | Random secret key |
    | `NEXTAUTH_URL` | `https://my-app.onrender.com` | Thay `my-app` bằng tên service của em |
    | `NODE_ENV` | `production` | Production mode |
+
+   **Ví dụ DATABASE_URL từ cPanel**:
+   ```
+   mysql://thaibin2_myapp:StrongPass123@yourdomain.com:3306/thaibin2_myapp_db
+   ```
 
    **Tạo NEXTAUTH_SECRET:**
    ```bash
@@ -126,8 +171,10 @@ git push origin master
 ## 🐛 TROUBLESHOOTING
 
 ### Lỗi: "Error: P1001: Can't reach database server"
-- Kiểm tra `DATABASE_URL` đã đúng chưa
-- Đảm bảo sử dụng **Internal URL**, không phải External URL
+- Kiểm tra `DATABASE_URL` đã đúng format chưa
+- **Nếu dùng cPanel MySQL**: Đảm bảo đã add `%.onrender.com` vào **Remote MySQL** trong cPanel
+- **Nếu dùng Railway/Aiven**: Kiểm tra URL đã copy đúng chưa
+- Test kết nối local trước: `mysql -h hostname -u username -p`
 
 ### Lỗi: "prisma generate failed"
 - Xem logs chi tiết trong Render Dashboard
@@ -153,16 +200,23 @@ git push origin master
 | **Build time** | 500 minutes/month |
 | **Sleep after inactivity** | 15 phút không request → sleep (~30s wake up) |
 
-### Railway.app (MySQL Database):
-| Resource | Limit |
-|----------|-------|
-| **MySQL Database** | $5 credit/month (~500 hours) |
-| **Storage** | Không giới hạn trong credit |
-| **RAM** | 8GB |
+### MySQL Options:
 
-**Lưu ý**: 
-- Render service sẽ sleep sau 15 phút không request
-- Railway $5/month đủ dùng cho hobby project (~20-25 ngày luôn on)
+#### 1. **Hosting cPanel** (Nếu đã mua):
+- ✅ Không giới hạn (tùy gói hosting)
+- ✅ Luôn online 24/7
+- ✅ Tốc độ cao nếu server ở Việt Nam
+
+#### 2. **Railway.app**:
+- ⚠️ Chỉ $5 credit/month (~20-25 ngày)
+- ⚠️ Hết credit → service dừng
+
+#### 3. **Aiven.io**:
+- ✅ 100% Free forever
+- ✅ 1GB RAM, 5GB storage
+- ⚠️ Server ở nước ngoài (có thể chậm)
+
+**Khuyến nghị**: Dùng MySQL từ hosting cPanel nếu em đã có!
 
 ---
 
