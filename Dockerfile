@@ -34,6 +34,10 @@ ENV NEXT_TELEMETRY_DISABLED=1
 ENV NODE_ENV=production
 ENV NPM_CONFIG_UPDATE_NOTIFIER=false
 
+# Add build-time DATABASE_URL (dummy URL for build process)
+ARG DATABASE_URL="mysql://build:build@localhost:3306/builddb"
+ENV DATABASE_URL=${DATABASE_URL}
+
 # Generate Prisma Client again in builder
 RUN npx prisma generate
 
