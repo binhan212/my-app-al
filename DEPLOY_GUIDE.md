@@ -15,19 +15,24 @@
 
 ---
 
-## BƯỚC 2: Tạo MySQL Database
+## BƯỚC 2: Tạo MySQL Database trên Railway.app
 
-1. Trong Render Dashboard, click **New +** → **MySQL**
-2. Điền thông tin:
-   - **Name**: `my-app-db`
-   - **Database**: `my_app_db`
-   - **User**: `my_app_user`
-   - **Region**: Chọn gần nhất (Singapore)
-   - **Plan**: **Free**
-3. Click **Create Database**
-4. Đợi ~2 phút để database khởi tạo
-5. **Quan trọng**: Vào tab **Connect** → Copy **Internal Database URL**
-   - Format: `mysql://my_app_user:password@dpg-xxx-a.singapore-postgres.render.com/my_app_db`
+**Lưu ý**: Render.com FREE không hỗ trợ MySQL, chỉ có PostgreSQL. Vì project dùng MySQL nên ta sẽ dùng Railway.app cho database (vẫn free).
+
+### 2.1. Tạo tài khoản Railway
+
+1. Truy cập: **https://railway.app**
+2. Click **Login with GitHub**
+3. Authorize Railway
+
+### 2.2. Tạo MySQL Database
+
+1. Click **New Project** → **Provision MySQL**
+2. Database sẽ tự động tạo
+3. Click vào **MySQL service**
+4. Tab **Connect** → Copy **MySQL Connection URL**
+   - Format: `mysql://root:password@containers-us-west-xxx.railway.app:6789/railway`
+5. **LƯU LẠI URL này** để dùng ở Bước 3
 
 ---
 
@@ -52,7 +57,7 @@
 
    | Key | Value | Ghi chú |
    |-----|-------|---------|
-   | `DATABASE_URL` | Paste **Internal Database URL** từ Bước 2 | MySQL connection string |
+   | `DATABASE_URL` | Paste **MySQL Connection URL** từ Railway (Bước 2) | MySQL connection string |
    | `NEXTAUTH_SECRET` | Generate bằng lệnh bên dưới | Random secret key |
    | `NEXTAUTH_URL` | `https://my-app.onrender.com` | Thay `my-app` bằng tên service của em |
    | `NODE_ENV` | `production` | Production mode |
@@ -140,15 +145,24 @@ git push origin master
 
 ## 📊 GIỚI HẠN FREE TIER
 
+### Render.com (Web Service):
 | Resource | Limit |
 |----------|-------|
-| **Web Service** | 750 hours/month (luôn on = ~31 days) |
-| **MySQL Database** | 1 GB storage |
+| **Web Service** | 750 hours/month |
 | **Bandwidth** | 100 GB/month |
 | **Build time** | 500 minutes/month |
-| **Sleep after inactivity** | 15 phút không request → sleep |
+| **Sleep after inactivity** | 15 phút không request → sleep (~30s wake up) |
 
-**Lưu ý**: Service sẽ sleep sau 15 phút không hoạt động, request đầu tiên sau khi sleep sẽ mất ~30s để wake up.
+### Railway.app (MySQL Database):
+| Resource | Limit |
+|----------|-------|
+| **MySQL Database** | $5 credit/month (~500 hours) |
+| **Storage** | Không giới hạn trong credit |
+| **RAM** | 8GB |
+
+**Lưu ý**: 
+- Render service sẽ sleep sau 15 phút không request
+- Railway $5/month đủ dùng cho hobby project (~20-25 ngày luôn on)
 
 ---
 
