@@ -68,7 +68,7 @@ export default async function HomePage() {
         siteDescription={settings?.footer_about || 'Cổng thông tin Quy hoạch quốc gia'}
         recentPosts={posts.slice(0, 5)}
       />
-      <NewsSection posts={posts.slice(5, 9)} />
+      <NewsSection posts={posts.slice(0, 4)} />
       <ProjectsSection projects={projects} />
       <VideoSection videos={videos} />
     </>
