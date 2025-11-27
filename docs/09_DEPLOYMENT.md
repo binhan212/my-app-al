@@ -68,11 +68,11 @@ ls node_modules/
 
 **Packages chính được cài:**
 - `next@16.0.4` - Framework Next.js
-- `react@19.0.0`, `react-dom@19.0.0` - React library
+- `react@19.2.0`, `react-dom@19.2.0` - React library
 - `@prisma/client@5.22.0` - Prisma ORM client
 - `next-auth@5.0.0-beta.30` - Authentication
-- `zod@3.24.1` - Validation
-- `tailwindcss@3.4.17` - CSS framework
+- `zod@4.1.13` - Validation
+- `tailwindcss@4.x` - CSS framework
 
 ### 🔧 Development Server
 

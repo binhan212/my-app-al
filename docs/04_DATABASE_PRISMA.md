@@ -27,6 +27,7 @@ Project có **12 tables** chính:
 | `users` | Quản lý user (admin/editor) | 10 | → posts, media, feedback |
 | `categories` | Danh mục (posts & projects) | 7 | ↔ posts, projects, self |
 | `posts` | Bài viết/Tin tức | 12 | ← users, categories, tags |
+| `about` | Trang giới thiệu | 5 | Standalone |
 | `tags` | Tags cho posts | 3 | ↔ posts (many-to-many) |
 | `post_tags` | Pivot table posts-tags | 2 | Join table |
 | `projects` | Dự án quy hoạch | 11 | ← categories |
