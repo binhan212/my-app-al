@@ -3,6 +3,7 @@
 import { useState, useEffect } from 'react'
 import { useRouter } from 'next/navigation'
 import Link from 'next/link'
+import Image from 'next/image'
 import type { Slide, Post } from '@prisma/client'
 
 interface HeroSectionProps {
@@ -156,8 +157,18 @@ export function HeroSection({ slides, siteName, siteDescription, recentPosts }: 
                   href={`/tin-tuc/${post.slug}`}
                   className="bg-white rounded-xl shadow-md p-6 text-center hover:shadow-lg transition cursor-pointer"
                 >
-                  <div className="w-20 h-20 mx-auto rounded-full bg-emerald-500 flex items-center justify-center mb-3">
-                    <span className="text-white font-bold text-lg">{index + 1}</span>
+                  <div className="w-20 h-20 mx-auto rounded-full bg-emerald-500 flex items-center justify-center mb-3 overflow-hidden relative">
+                    {post.cover_image ? (
+                      <Image 
+                        src={post.cover_image} 
+                        alt={post.title}
+                        fill
+                        className="object-cover"
+                        sizes="80px"
+                      />
+                    ) : (
+                      <span className="text-white font-bold text-lg">{index + 1}</span>
+                    )}
                   </div>
                   <h3 className="text-sky-700 font-semibold text-sm leading-tight">
                     {truncateTitle(post.title, 5)}
@@ -172,7 +183,9 @@ export function HeroSection({ slides, siteName, siteDescription, recentPosts }: 
                   className="bg-white rounded-xl shadow-md p-6 text-center opacity-50"
                 >
                   <div className="w-20 h-20 mx-auto rounded-full bg-gray-300 flex items-center justify-center mb-3">
-                    <span className="text-white font-bold text-lg">{recentPosts.length + index + 1}</span>
+                    <svg className="w-10 h-10 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                    </svg>
                   </div>
                   <h3 className="text-gray-400 font-semibold text-sm">
                     Chưa có bài viết
