@@ -16,7 +16,7 @@ export default async function HomePage() {
       take: 5
     }),
     
-    // Get latest published posts
+    // Get latest published posts (5 for hero cards + extra for news section)
     db.post.findMany({
       where: { 
         status: 'published',
@@ -31,7 +31,7 @@ export default async function HomePage() {
         }
       },
       orderBy: { published_at: 'desc' },
-      take: 4
+      take: 9
     }),
 
     // Get latest published projects
@@ -66,8 +66,9 @@ export default async function HomePage() {
         slides={slides} 
         siteName={settings?.site_name || 'Quy hoạch Quốc gia'}
         siteDescription={settings?.footer_about || 'Cổng thông tin Quy hoạch quốc gia'}
+        recentPosts={posts.slice(0, 5)}
       />
-      <NewsSection posts={posts} />
+      <NewsSection posts={posts.slice(5, 9)} />
       <ProjectsSection projects={projects} />
       <VideoSection videos={videos} />
     </>

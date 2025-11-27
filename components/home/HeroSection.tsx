@@ -2,15 +2,23 @@
 
 import { useState, useEffect } from 'react'
 import { useRouter } from 'next/navigation'
-import type { Slide } from '@prisma/client'
+import Link from 'next/link'
+import type { Slide, Post } from '@prisma/client'
 
 interface HeroSectionProps {
   slides: Slide[]
   siteName: string
   siteDescription: string
+  recentPosts: (Post & { category: { id: number; name: string } | null })[]
 }
 
-export function HeroSection({ slides, siteName, siteDescription }: HeroSectionProps) {
+function truncateTitle(title: string, maxWords: number = 5): string {
+  const words = title.split(' ')
+  if (words.length <= maxWords) return title
+  return words.slice(0, maxWords).join(' ') + '...'
+}
+
+export function HeroSection({ slides, siteName, siteDescription, recentPosts }: HeroSectionProps) {
   const router = useRouter()
   const [currentSlide, setCurrentSlide] = useState(0)
   const [searchType, setSearchType] = useState<'posts' | 'projects'>('posts')
@@ -83,10 +91,10 @@ export function HeroSection({ slides, siteName, siteDescription }: HeroSectionPr
             {/* Title */}
             <div className="text-center text-white my-8">
               <h1 className="text-2xl md:text-3xl font-extrabold drop-shadow-lg my-4">
-                CỔNG THÔNG TIN VÀ CƠ SỞ DỮ LIỆU TÍCH HỢP
+                {siteName}
               </h1>
               <p className="mt-2 text-lg md:text-xl font-semibold drop-shadow">
-                QUỐC GIA VỀ QUY HOẠCH
+                {siteDescription}
               </p>
             </div>
 
@@ -140,52 +148,37 @@ export function HeroSection({ slides, siteName, siteDescription }: HeroSectionPr
               </form>
             </div>
 
-            {/* Planning Types Cards */}
+            {/* Recent Posts Cards */}
             <div className="mt-10 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-6 items-stretch">
-              <div className="bg-white rounded-xl shadow-md p-6 text-center hover:shadow-lg transition cursor-pointer">
-                <div className="w-20 h-20 mx-auto rounded-full bg-emerald-500 flex items-center justify-center mb-3">
-                  <span className="text-white font-bold text-lg">VN</span>
+              {recentPosts.slice(0, 5).map((post, index) => (
+                <Link
+                  key={post.id}
+                  href={`/tin-tuc/${post.slug}`}
+                  className="bg-white rounded-xl shadow-md p-6 text-center hover:shadow-lg transition cursor-pointer"
+                >
+                  <div className="w-20 h-20 mx-auto rounded-full bg-emerald-500 flex items-center justify-center mb-3">
+                    <span className="text-white font-bold text-lg">{index + 1}</span>
+                  </div>
+                  <h3 className="text-sky-700 font-semibold text-sm leading-tight">
+                    {truncateTitle(post.title, 5)}
+                  </h3>
+                </Link>
+              ))}
+              
+              {/* Fill with empty cards if less than 5 posts */}
+              {recentPosts.length < 5 && Array.from({ length: 5 - recentPosts.length }).map((_, index) => (
+                <div
+                  key={`empty-${index}`}
+                  className="bg-white rounded-xl shadow-md p-6 text-center opacity-50"
+                >
+                  <div className="w-20 h-20 mx-auto rounded-full bg-gray-300 flex items-center justify-center mb-3">
+                    <span className="text-white font-bold text-lg">{recentPosts.length + index + 1}</span>
+                  </div>
+                  <h3 className="text-gray-400 font-semibold text-sm">
+                    Chưa có bài viết
+                  </h3>
                 </div>
-                <h3 className="text-sky-700 font-semibold">
-                  Quy Hoạch<br />Cấp Quốc Gia
-                </h3>
-              </div>
-
-              <div className="bg-white rounded-xl shadow-md p-6 text-center hover:shadow-lg transition cursor-pointer">
-                <div className="w-20 h-20 mx-auto rounded-full bg-emerald-500 flex items-center justify-center mb-3">
-                  <span className="text-white font-bold text-lg">RG</span>
-                </div>
-                <h3 className="text-sky-700 font-semibold">
-                  Quy Hoạch<br />Vùng
-                </h3>
-              </div>
-
-              <div className="bg-white rounded-xl shadow-md p-6 text-center hover:shadow-lg transition cursor-pointer">
-                <div className="w-20 h-20 mx-auto rounded-full bg-emerald-500 flex items-center justify-center mb-3">
-                  <span className="text-white font-bold text-lg">TN</span>
-                </div>
-                <h3 className="text-sky-700 font-semibold">
-                  Quy Hoạch<br />Tỉnh
-                </h3>
-              </div>
-
-              <div className="bg-white rounded-xl shadow-md p-6 text-center hover:shadow-lg transition cursor-pointer">
-                <div className="w-20 h-20 mx-auto rounded-full bg-emerald-500 flex items-center justify-center mb-3">
-                  <span className="text-white font-bold text-lg">ĐT</span>
-                </div>
-                <h3 className="text-sky-700 font-semibold">
-                  Quy Hoạch<br />Đô Thị - Nông Thôn
-                </h3>
-              </div>
-
-              <div className="bg-white rounded-xl shadow-md p-6 text-center hover:shadow-lg transition cursor-pointer">
-                <div className="w-20 h-20 mx-auto rounded-full bg-emerald-500 flex items-center justify-center mb-3">
-                  <span className="text-white font-bold text-lg">KT</span>
-                </div>
-                <h3 className="text-sky-700 font-semibold">
-                  QH Có Tính Chất<br />KT, Chuyên Ngành
-                </h3>
-              </div>
+              ))}
             </div>
           </div>
         </section>
