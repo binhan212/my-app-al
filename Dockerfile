@@ -7,6 +7,9 @@ FROM node:20-alpine AS deps
 RUN apk add --no-cache libc6-compat openssl
 WORKDIR /app
 
+# Disable npm update notifications
+ENV NPM_CONFIG_UPDATE_NOTIFIER=false
+
 # Copy package files
 COPY package.json package-lock.json* ./
 COPY prisma ./prisma/
@@ -19,6 +22,7 @@ RUN npx prisma generate
 
 # Stage 2: Builder
 FROM node:20-alpine AS builder
+RUN apk add --no-cache libc6-compat openssl
 WORKDIR /app
 
 # Copy dependencies from deps stage
@@ -28,6 +32,7 @@ COPY . .
 # Set environment variables for build
 ENV NEXT_TELEMETRY_DISABLED=1
 ENV NODE_ENV=production
+ENV NPM_CONFIG_UPDATE_NOTIFIER=false
 
 # Generate Prisma Client again in builder
 RUN npx prisma generate
@@ -37,10 +42,12 @@ RUN npm run build
 
 # Stage 3: Runner
 FROM node:20-alpine AS runner
+RUN apk add --no-cache libc6-compat openssl
 WORKDIR /app
 
 ENV NODE_ENV=production
 ENV NEXT_TELEMETRY_DISABLED=1
+ENV NPM_CONFIG_UPDATE_NOTIFIER=false
 
 # Create a non-root user
 RUN addgroup --system --gid 1001 nodejs
