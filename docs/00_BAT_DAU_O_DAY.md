@@ -53,23 +53,23 @@
    - Styling với Tailwind
 
 ### PHẦN 4: TÍNH NĂNG NÂNG CAO
-8. **[08_FEATURES.md](./08_FEATURES.md)**
-   - Posts management
-   - Projects management
-   - File upload
-   - Search functionality
-   - Settings management
+8. **FEATURES - Quản lý tính năng**
+   - **[08.1_FEATURES_POSTS.md](./08.1_FEATURES_POSTS.md)** - Posts Management (Quản lý bài viết)
+   - **[08.2_FEATURES_PROJECTS.md](./08.2_FEATURES_PROJECTS.md)** - Projects Management (Quản lý dự án)
+   - **[08.3_FEATURES_VIDEOS.md](./08.3_FEATURES_VIDEOS.md)** - Videos Management (Quản lý video)
 
-9. **[09_DOCKER_DEPLOYMENT.md](./09_DOCKER_DEPLOYMENT.md)**
-   - Docker là gì?
-   - Dockerfile explained
-   - docker-compose.yml
-   - Deployment process
+9. **[09_DEPLOYMENT.md](./09_DEPLOYMENT.md)** - Triển khai dự án
+   - Local development setup
+   - MySQL database setup
+   - Environment variables
+   - Production deployment (Vercel, Railway, VPS)
 
-10. **[10_TROUBLESHOOTING.md](./10_TROUBLESHOOTING.md)**
-    - Common errors
-    - Debugging tips
+10. **[10_TROUBLESHOOTING.md](./10_TROUBLESHOOTING.md)** - Giải quyết lỗi
+    - Database & Prisma errors
+    - Authentication errors
+    - API & build errors
     - Performance optimization
+    - Debugging tools & FAQ
 
 ---
 
