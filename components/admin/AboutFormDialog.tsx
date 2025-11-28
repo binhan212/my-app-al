@@ -169,8 +169,8 @@ export function AboutFormDialog({
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className="max-w-3xl max-h-[90vh] overflow-y-auto">
-        <DialogHeader>
+      <DialogContent className="max-w-5xl w-[95vw] max-h-[95vh] overflow-hidden flex flex-col">
+        <DialogHeader className="flex-shrink-0">
           <DialogTitle>
             {isEdit ? 'Chỉnh sửa Giới thiệu' : 'Thêm Nội dung Giới thiệu'}
           </DialogTitle>
@@ -179,75 +179,83 @@ export function AboutFormDialog({
           </DialogDescription>
         </DialogHeader>
 
-        <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
-          <div className="space-y-2">
-            <Label htmlFor="image_url">Hình ảnh (tùy chọn)</Label>
-            
-            <div className="space-y-2">
-              <Input
-                id="image_file"
-                type="file"
-                accept="image/*"
-                onChange={handleFileUpload}
-                disabled={isUploading}
-              />
-              {isUploading && (
-                <p className="text-sm text-blue-600">Đang upload...</p>
-              )}
-            </div>
+        <form onSubmit={handleSubmit(onSubmit)} className="flex-1 flex flex-col overflow-hidden">
+          <div className="flex-1 overflow-y-auto px-1">
+            <div className="space-y-6 pb-6">
+              {/* Image Upload Field */}
+              <div className="space-y-2">
+                <Label htmlFor="image_url">Hình ảnh (tùy chọn)</Label>
+                
+                <div className="space-y-2">
+                  <Input
+                    id="image_file"
+                    type="file"
+                    accept="image/*"
+                    onChange={handleFileUpload}
+                    disabled={isUploading}
+                  />
+                  {isUploading && (
+                    <p className="text-sm text-blue-600">Đang upload...</p>
+                  )}
+                </div>
 
-            {previewImage && (
-              <div className="mt-2 relative w-full h-48">
-                <Image
-                  src={previewImage}
-                  alt="Preview"
-                  fill
-                  className="object-cover rounded-lg border"
+                {previewImage && (
+                  <div className="mt-2 relative w-full h-48">
+                    <Image
+                      src={previewImage}
+                      alt="Preview"
+                      fill
+                      className="object-cover rounded-lg border"
+                    />
+                  </div>
+                )}
+
+                <div className="relative">
+                  <div className="absolute inset-0 flex items-center">
+                    <span className="w-full border-t" />
+                  </div>
+                  <div className="relative flex justify-center text-xs uppercase">
+                    <span className="bg-white px-2 text-muted-foreground">
+                      Hoặc nhập URL
+                    </span>
+                  </div>
+                </div>
+
+                <Input
+                  id="image_url"
+                  {...register('image_url')}
+                  placeholder="https://example.com/image.jpg"
+                  onChange={(e) => {
+                    setValue('image_url', e.target.value)
+                    setPreviewImage(e.target.value)
+                  }}
                 />
               </div>
-            )}
 
-            <div className="relative">
-              <div className="absolute inset-0 flex items-center">
-                <span className="w-full border-t" />
-              </div>
-              <div className="relative flex justify-center text-xs uppercase">
-                <span className="bg-white px-2 text-muted-foreground">
-                  Hoặc nhập URL
-                </span>
+              {/* Content Editor Field */}
+              <div className="space-y-2">
+                <Label>
+                  Nội dung <span className="text-red-500">*</span>
+                </Label>
+                <div className="border rounded-md overflow-hidden">
+                  <div className="min-h-[400px] w-full">
+                    <CKEditorComponent
+                      value={editorContent}
+                      onChange={(content) => {
+                        setEditorContent(content)
+                        setValue('content', content)
+                      }}
+                    />
+                  </div>
+                </div>
+                {errors.content && (
+                  <p className="text-sm text-red-500">{errors.content.message}</p>
+                )}
               </div>
             </div>
-
-            <Input
-              id="image_url"
-              {...register('image_url')}
-              placeholder="https://example.com/image.jpg"
-              onChange={(e) => {
-                setValue('image_url', e.target.value)
-                setPreviewImage(e.target.value)
-              }}
-            />
           </div>
 
-          <div className="space-y-2">
-            <Label>
-              Nội dung <span className="text-red-500">*</span>
-            </Label>
-            <div className="border rounded-md min-h-[300px] overflow-hidden">
-              <CKEditorComponent
-                value={editorContent}
-                onChange={(content) => {
-                  setEditorContent(content)
-                  setValue('content', content)
-                }}
-              />
-            </div>
-            {errors.content && (
-              <p className="text-sm text-red-500">{errors.content.message}</p>
-            )}
-          </div>
-
-          <DialogFooter>
+          <DialogFooter className="flex-shrink-0 mt-4 border-t pt-4">
             <Button
               type="button"
               variant="outline"
