@@ -169,8 +169,8 @@ export function AboutFormDialog({
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className="max-w-5xl w-[95vw] max-h-[95vh] overflow-hidden flex flex-col">
-        <DialogHeader className="flex-shrink-0">
+      <DialogContent className="max-w-6xl w-[98vw] max-h-[98vh] overflow-hidden flex flex-col p-0">
+        <DialogHeader className="flex-shrink-0 px-6 pt-6">
           <DialogTitle>
             {isEdit ? 'Chỉnh sửa Giới thiệu' : 'Thêm Nội dung Giới thiệu'}
           </DialogTitle>
@@ -180,8 +180,8 @@ export function AboutFormDialog({
         </DialogHeader>
 
         <form onSubmit={handleSubmit(onSubmit)} className="flex-1 flex flex-col overflow-hidden">
-          <div className="flex-1 overflow-y-auto px-1">
-            <div className="space-y-6 pb-6">
+          <div className="flex-1 overflow-y-auto px-6">
+            <div className="space-y-6 py-6">
               {/* Image Upload Field */}
               <div className="space-y-2">
                 <Label htmlFor="image_url">Hình ảnh (tùy chọn)</Label>
@@ -237,16 +237,14 @@ export function AboutFormDialog({
                 <Label>
                   Nội dung <span className="text-red-500">*</span>
                 </Label>
-                <div className="border rounded-md overflow-hidden">
-                  <div className="min-h-[400px] w-full">
-                    <CKEditorComponent
-                      value={editorContent}
-                      onChange={(content) => {
-                        setEditorContent(content)
-                        setValue('content', content)
-                      }}
-                    />
-                  </div>
+                <div className="border rounded-md overflow-visible">
+                  <CKEditorComponent
+                    value={editorContent}
+                    onChange={(content) => {
+                      setEditorContent(content)
+                      setValue('content', content)
+                    }}
+                  />
                 </div>
                 {errors.content && (
                   <p className="text-sm text-red-500">{errors.content.message}</p>
@@ -255,7 +253,7 @@ export function AboutFormDialog({
             </div>
           </div>
 
-          <DialogFooter className="flex-shrink-0 mt-4 border-t pt-4">
+          <DialogFooter className="flex-shrink-0 px-6 py-4 border-t bg-white">
             <Button
               type="button"
               variant="outline"
