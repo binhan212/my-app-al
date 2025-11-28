@@ -29,9 +29,9 @@ INSERT INTO settings (
   contact_phone,
   footer_copyright
 ) VALUES (
-  'Cổng Thông Tin Quy Hoạch Quốc Gia',
-  'Cổng thông tin Quy hoạch quốc gia - Bộ Kế hoạch và Đầu tư.',
+  'Phường Âu Lâu - Tỉnh Lào Cai',
+  'Cổng thông tin, kế hoạch và đầu tư phường Âu Lâu, tỉnh Lào Cai',
   'info@domain.example',
   '(84) 24 1234 5678',
-  'Bộ Kế hoạch và Đầu tư'
+  'Phường Âu Lâu'
 );

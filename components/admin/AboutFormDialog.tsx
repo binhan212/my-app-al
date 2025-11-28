@@ -169,9 +169,9 @@ export function AboutFormDialog({
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className="max-w-6xl w-[98vw] max-h-[98vh] overflow-hidden flex flex-col p-0">
-        <DialogHeader className="flex-shrink-0 px-6 pt-6">
-          <DialogTitle>
+      <DialogContent className="max-w-[1600px] w-[98vw] h-[98vh] overflow-hidden flex flex-col p-0">
+        <DialogHeader className="flex-shrink-0 px-6 pt-6 pb-4 border-b bg-white">
+          <DialogTitle className="text-xl font-semibold">
             {isEdit ? 'Chỉnh sửa Giới thiệu' : 'Thêm Nội dung Giới thiệu'}
           </DialogTitle>
           <DialogDescription>
@@ -179,9 +179,9 @@ export function AboutFormDialog({
           </DialogDescription>
         </DialogHeader>
 
-        <form onSubmit={handleSubmit(onSubmit)} className="flex-1 flex flex-col overflow-hidden">
-          <div className="flex-1 overflow-y-auto px-6">
-            <div className="space-y-6 py-6">
+        <form onSubmit={handleSubmit(onSubmit)} className="flex-1 flex flex-col overflow-hidden min-h-0">
+          <div className="flex-1 overflow-y-auto px-6 py-6 min-h-0">
+            <div className="space-y-6 max-w-full">
               {/* Image Upload Field */}
               <div className="space-y-2">
                 <Label htmlFor="image_url">Hình ảnh (tùy chọn)</Label>
@@ -233,18 +233,20 @@ export function AboutFormDialog({
               </div>
 
               {/* Content Editor Field */}
-              <div className="space-y-2">
-                <Label>
+              <div className="space-y-2 w-full">
+                <Label className="text-sm font-medium">
                   Nội dung <span className="text-red-500">*</span>
                 </Label>
-                <div className="border rounded-md overflow-visible">
-                  <CKEditorComponent
-                    value={editorContent}
-                    onChange={(content) => {
-                      setEditorContent(content)
-                      setValue('content', content)
-                    }}
-                  />
+                <div className="w-full">
+                  <div className="border rounded-lg overflow-hidden min-h-[600px] bg-white">
+                    <CKEditorComponent
+                      value={editorContent}
+                      onChange={(content) => {
+                        setEditorContent(content)
+                        setValue('content', content)
+                      }}
+                    />
+                  </div>
                 </div>
                 {errors.content && (
                   <p className="text-sm text-red-500">{errors.content.message}</p>
@@ -253,16 +255,17 @@ export function AboutFormDialog({
             </div>
           </div>
 
-          <DialogFooter className="flex-shrink-0 px-6 py-4 border-t bg-white">
+          <DialogFooter className="flex-shrink-0 px-6 py-4 border-t bg-white flex flex-row justify-end gap-3">
             <Button
               type="button"
               variant="outline"
               onClick={() => onOpenChange(false)}
               disabled={isSubmitting}
+              className="h-11"
             >
               Hủy
             </Button>
-            <Button type="submit" disabled={isSubmitting}>
+            <Button type="submit" disabled={isSubmitting} className="h-11">
               {isSubmitting ? 'Đang lưu...' : 'Lưu'}
             </Button>
           </DialogFooter>

@@ -121,10 +121,22 @@
     @apply bg-background text-foreground;
   }
 }
-/* Fix CKEditor overflow in modal */
+
+/* Fix CKEditor overflow and display in modal */
+.ckeditor-wrapper {
+  width: 100% !important;
+  max-width: 100% !important;
+}
+
+.ck-editor {
+  width: 100% !important;
+  max-width: 100% !important;
+}
+
 .ck-editor__editable {
   max-width: 100% !important;
   overflow-x: hidden !important;
+  min-height: 500px !important;
 }
 
 .ck.ck-editor__main > .ck-editor__editable {
@@ -133,5 +145,10 @@
 }
 
 .ck-toolbar {
+  flex-wrap: wrap !important;
+  border-bottom: 1px solid #e5e7eb !important;
+}
+
+.ck.ck-toolbar .ck-toolbar__items {
   flex-wrap: wrap !important;
 }

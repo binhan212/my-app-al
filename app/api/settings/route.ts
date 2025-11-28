@@ -9,11 +9,11 @@ export async function GET() {
     if (!settings) {
       settings = await db.setting.create({
         data: {
-          site_name: 'Cổng Thông Tin Quy Hoạch Quốc Gia',
-          footer_about: 'Cổng thông tin Quy hoạch quốc gia - Bộ Kế hoạch và Đầu tư.',
+          site_name: 'Phường Âu Lâu',
+          footer_about: 'Cổng thông tin, kế hoạch và đầu tư phường Âu Lâu, tỉnh Lào Cai',
           contact_email: 'info@domain.example',
           contact_phone: '(84) 24 1234 5678',
-          footer_copyright: 'Bộ Kế hoạch và Đầu tư'
+          footer_copyright: 'Phường Âu Lâu'
         }
       })
     }

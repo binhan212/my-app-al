@@ -18,7 +18,7 @@ async function migrateSettings() {
     await prisma.$executeRawUnsafe(`
       CREATE TABLE \`settings\` (
         \`id\` INT AUTO_INCREMENT PRIMARY KEY,
-        \`site_name\` VARCHAR(255) NOT NULL DEFAULT 'Cổng Thông Tin Quy Hoạch Quốc Gia',
+        \`site_name\` VARCHAR(255) NOT NULL DEFAULT 'Phường Âu Lâu - Tỉnh Lào Cai',
         \`site_logo\` VARCHAR(500),
         \`site_favicon\` VARCHAR(500),
         \`footer_about\` TEXT,
@@ -42,11 +42,11 @@ async function migrateSettings() {
         \`contact_phone\`,
         \`footer_copyright\`
       ) VALUES (
-        'Cổng Thông Tin Quy Hoạch Quốc Gia',
-        'Cổng thông tin Quy hoạch quốc gia - Bộ Kế hoạch và Đầu tư.',
+        'Phường Âu Lâu - Tỉnh Lào Cai',
+        'Cổng thông tin, kế hoạch và đầu tư phường Âu Lâu, tỉnh Lào Cai',
         'info@domain.example',
         '(84) 24 1234 5678',
-        'Bộ Kế hoạch và Đầu tư'
+        'Phường Âu Lâu'
       )
     `)
     console.log('✅ Inserted default settings')

@@ -91,9 +91,9 @@ export default async function ProjectDetailPage({ params }: PageProps) {
 
             {/* Meta Info */}
             <div className="flex flex-wrap items-center gap-4 text-sm text-gray-600 mb-6 pb-6 border-b">
-              <span>📅 {formatDate(project.published_at!)}</span>
+              <span> {formatDate(project.published_at!)}</span>
               <span className="text-slate-300">•</span>
-              <span>👁️ {project.views} lượt xem</span>
+              <span> {project.views} lượt xem</span>
               {project.category && (
                 <>
                   <span className="text-slate-300">•</span>
@@ -111,7 +111,7 @@ export default async function ProjectDetailPage({ params }: PageProps) {
 
             {/* PDF File */}
             {project.pdf_file && (
-              <div className="bg-green-50 border border-green-200 rounded-lg p-6 mb-6">
+              <div className="bg-gray-50 border border-gray-200 rounded-lg p-6 mb-6">
                 <h3 className="font-semibold text-lg mb-3 flex items-center gap-2">
                   <span>📄</span> Tài liệu dự án
                 </h3>
@@ -122,7 +122,7 @@ export default async function ProjectDetailPage({ params }: PageProps) {
                     rel="noopener noreferrer"
                   >
                     <Button variant="default">
-                      <span className="mr-2">👁️</span> Xem PDF
+                      <span className="mr-2"></span>Xem PDF
                     </Button>
                   </a>
                   <a 
@@ -130,7 +130,7 @@ export default async function ProjectDetailPage({ params }: PageProps) {
                     download
                   >
                     <Button variant="secondary">
-                      <span className="mr-2">⬇️</span> Tải xuống
+                      <span className="mr-2"></span> Tải xuống
                     </Button>
                   </a>
                 </div>

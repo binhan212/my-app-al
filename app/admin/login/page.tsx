@@ -87,7 +87,7 @@ export default function AdminLoginPage() {
           </div>
           <CardTitle className="text-2xl text-center">Đăng nhập Admin</CardTitle>
           <CardDescription className="text-center">
-            Bộ Kế hoạch và Đầu tư
+            Phường Âu Lâu - Tỉnh Lào Cai
           </CardDescription>
         </CardHeader>
         <CardContent>

@@ -39,7 +39,7 @@ export function AdminHeader({ user }: AdminHeaderProps) {
               Quản trị hệ thống
             </h1>
             <p className="text-sm text-gray-500">
-              Bộ Kế hoạch và Đầu tư
+              Phường Âu Lâu
             </p>
           </div>
         </div>

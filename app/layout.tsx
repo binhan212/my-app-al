@@ -5,8 +5,8 @@ import { SessionProvider } from '@/components/providers/SessionProvider'
 import { Toaster } from '@/components/ui/toaster'
 
 export const metadata: Metadata = {
-  title: "Quy hoạch Quốc gia - Bộ Kế hoạch và Đầu tư",
-  description: "Cổng thông tin Quy hoạch quốc gia",
+  title: "Phường Âu Lâu - Tỉnh Lào Cai",
+  description: "Cổng thông tin, kế hoạch và đầu tư phường Âu Lâu, thành phố Lào Cai",
 };
 
 export default async function RootLayout({

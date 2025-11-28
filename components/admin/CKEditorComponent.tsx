@@ -35,27 +35,29 @@ interface CKEditorComponentProps {
 
 export default function CKEditorComponent({ value, onChange }: CKEditorComponentProps) {
   return (
-    <CKEditor
-      editor={ClassicEditor}
-      config={{
-        licenseKey: 'GPL', // Bản GPL miễn phí
-        toolbar: {
-          items: [
-            'undo', 'redo',
-            '|',
-            'heading',
-            '|',
-            'fontSize', 'fontFamily', 'fontColor', 'fontBackgroundColor',
-            '|',
-            'bold', 'italic', 'underline',
-            '|',
-            'link', 'uploadImage', 'insertTable', 'blockQuote', 'mediaEmbed',
-            '|',
-            'alignment',
-            '|',
-            'bulletedList', 'numberedList', 'outdent', 'indent'
-          ]
-        },
+    <div className="ckeditor-wrapper w-full">
+      <CKEditor
+        editor={ClassicEditor}
+        config={{
+          licenseKey: 'GPL', // Bản GPL miễn phí
+          toolbar: {
+            items: [
+              'undo', 'redo',
+              '|',
+              'heading',
+              '|',
+              'fontSize', 'fontFamily', 'fontColor', 'fontBackgroundColor',
+              '|',
+              'bold', 'italic', 'underline',
+              '|',
+              'link', 'uploadImage', 'insertTable', 'blockQuote', 'mediaEmbed',
+              '|',
+              'alignment',
+              '|',
+              'bulletedList', 'numberedList', 'outdent', 'indent'
+            ],
+            shouldNotGroupWhenFull: true
+          },
         plugins: [
           Bold,
           Essentials,
@@ -108,6 +110,7 @@ export default function CKEditorComponent({ value, onChange }: CKEditorComponent
         const data = editor.getData()
         onChange(data)
       }}
-    />
+      />
+    </div>
   )
 }
