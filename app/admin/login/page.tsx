@@ -91,7 +91,7 @@ export default function AdminLoginPage() {
           </CardDescription>
         </CardHeader>
         <CardContent>
-          <form onSubmit={handleSubmit} className="space-y-4">
+          <form onSubmit={handleSubmit} className="space-y-6">
             {error && (
               <div className="bg-red-50 border border-red-200 text-red-800 px-4 py-3 rounded">
                 {error}
@@ -99,7 +99,9 @@ export default function AdminLoginPage() {
             )}
 
             <div className="space-y-2">
-              <Label htmlFor="username">Tên đăng nhập</Label>
+              <Label htmlFor="username" className="text-sm font-medium">
+                Tên đăng nhập
+              </Label>
               <Input
                 id="username"
                 type="text"
@@ -108,11 +110,14 @@ export default function AdminLoginPage() {
                 onChange={handleChange}
                 placeholder="Nhập tên đăng nhập..."
                 disabled={isLoading}
+                className="h-11"
               />
             </div>
 
             <div className="space-y-2">
-              <Label htmlFor="password">Mật khẩu</Label>
+              <Label htmlFor="password" className="text-sm font-medium">
+                Mật khẩu
+              </Label>
               <Input
                 id="password"
                 type="password"
@@ -121,12 +126,13 @@ export default function AdminLoginPage() {
                 onChange={handleChange}
                 placeholder="Nhập mật khẩu..."
                 disabled={isLoading}
+                className="h-11"
               />
             </div>
 
             <Button 
               type="submit" 
-              className="w-full" 
+              className="w-full h-11 text-base font-medium mt-6" 
               disabled={isLoading}
             >
               {isLoading ? 'Đang đăng nhập...' : 'Đăng nhập'}

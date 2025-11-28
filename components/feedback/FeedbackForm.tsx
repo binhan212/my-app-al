@@ -68,9 +68,12 @@ export function FeedbackForm() {
         <CardTitle>Gửi ý kiến của bạn</CardTitle>
       </CardHeader>
       <CardContent>
-        <form onSubmit={handleSubmit} className="space-y-4">
-          <div>
-            <Label htmlFor="name">Họ tên *</Label>
+        <form onSubmit={handleSubmit} className="space-y-6">
+          {/* Họ tên */}
+          <div className="space-y-2">
+            <Label htmlFor="name" className="text-sm font-medium">
+              Họ tên *
+            </Label>
             <Input
               id="name"
               type="text"
@@ -78,11 +81,15 @@ export function FeedbackForm() {
               value={formData.name}
               onChange={handleChange}
               placeholder="Nhập họ tên..."
+              className="h-11"
             />
           </div>
 
-          <div>
-            <Label htmlFor="email">Email *</Label>
+          {/* Email */}
+          <div className="space-y-2">
+            <Label htmlFor="email" className="text-sm font-medium">
+              Email *
+            </Label>
             <Input
               id="email"
               type="email"
@@ -90,22 +97,30 @@ export function FeedbackForm() {
               value={formData.email}
               onChange={handleChange}
               placeholder="Nhập email..."
+              className="h-11"
             />
           </div>
 
-          <div>
-            <Label htmlFor="phone">Số điện thoại</Label>
+          {/* Số điện thoại */}
+          <div className="space-y-2">
+            <Label htmlFor="phone" className="text-sm font-medium">
+              Số điện thoại
+            </Label>
             <Input
               id="phone"
               type="tel"
               value={formData.phone}
               onChange={handleChange}
               placeholder="Nhập số điện thoại..."
+              className="h-11"
             />
           </div>
 
-          <div>
-            <Label htmlFor="subject">Tiêu đề *</Label>
+          {/* Tiêu đề */}
+          <div className="space-y-2">
+            <Label htmlFor="subject" className="text-sm font-medium">
+              Tiêu đề *
+            </Label>
             <Input
               id="subject"
               type="text"
@@ -113,22 +128,32 @@ export function FeedbackForm() {
               value={formData.subject}
               onChange={handleChange}
               placeholder="Nhập tiêu đề..."
+              className="h-11"
             />
           </div>
 
-          <div>
-            <Label htmlFor="message">Nội dung *</Label>
+          {/* Nội dung */}
+          <div className="space-y-2">
+            <Label htmlFor="message" className="text-sm font-medium">
+              Nội dung *
+            </Label>
             <Textarea
               id="message"
               required
-              rows={5}
+              rows={6}
               value={formData.message}
               onChange={handleChange}
               placeholder="Nhập nội dung ý kiến..."
+              className="resize-none"
             />
           </div>
 
-          <Button type="submit" disabled={isSubmitting} className="w-full">
+          {/* Submit Button */}
+          <Button 
+            type="submit" 
+            disabled={isSubmitting} 
+            className="w-full h-11 text-base font-medium"
+          >
             {isSubmitting ? 'Đang gửi...' : 'Gửi ý kiến'}
           </Button>
         </form>
