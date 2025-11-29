@@ -8,7 +8,7 @@ export const revalidate = 60 // Revalidate every 60 seconds
 
 export default async function HomePage() {
   // Fetch data in parallel
-  const [slides, posts, projects, videos, settings] = await Promise.all([
+  const [slides, posts, projects, videos, drawings, settings] = await Promise.all([
     // Get active slides
     db.slide.findMany({
       where: { is_active: true },
@@ -16,7 +16,7 @@ export default async function HomePage() {
       take: 5
     }),
     
-    // Get latest published posts (5 for hero cards + extra for news section)
+    // Get latest published posts for news section
     db.post.findMany({
       where: { 
         status: 'published',
@@ -31,7 +31,7 @@ export default async function HomePage() {
         }
       },
       orderBy: { published_at: 'desc' },
-      take: 9
+      take: 4
     }),
 
     // Get latest published projects
@@ -56,6 +56,16 @@ export default async function HomePage() {
       take: 3
     }),
 
+    // Get active drawings for hero section
+    db.drawing.findMany({
+      where: { status: 'active' },
+      orderBy: [
+        { display_order: 'asc' },
+        { created_at: 'desc' }
+      ],
+      take: 5
+    }),
+
     // Get site settings (single record)
     db.setting.findFirst()
   ])
@@ -66,9 +76,9 @@ export default async function HomePage() {
         slides={slides} 
         siteName={settings?.site_name || 'Quy hoạch Quốc gia'}
         siteDescription={settings?.footer_about || 'Cổng thông tin Quy hoạch quốc gia'}
-        recentPosts={posts.slice(0, 5)}
+        recentDrawings={drawings}
       />
-      <NewsSection posts={posts.slice(0, 4)} />
+      <NewsSection posts={posts} />
       <ProjectsSection projects={projects} />
       <VideoSection videos={videos} />
     </>

@@ -19,6 +19,7 @@ export async function POST(request: NextRequest) {
     // Validate file type based on upload type
     const imageTypes = ['image/jpeg', 'image/jpg', 'image/png', 'image/gif', 'image/webp']
     const pdfTypes = ['application/pdf']
+    const dwgTypes = ['application/acad', 'application/x-acad', 'application/autocad_drawing', 'image/vnd.dwg', 'image/x-dwg', 'application/dwg', 'application/x-dwg', 'application/x-autocad', 'image/vnd.dxf']
     
     if (type === 'pdfs') {
       if (!pdfTypes.includes(file.type)) {
@@ -32,6 +33,23 @@ export async function POST(request: NextRequest) {
       if (file.size > maxSize) {
         return NextResponse.json(
           { success: false, message: 'File PDF quá lớn. Tối đa 10MB' },
+          { status: 400 }
+        )
+      }
+    } else if (type === 'dwg') {
+      // DWG files - check by extension since MIME type varies
+      const ext = path.extname(file.name).toLowerCase()
+      if (ext !== '.dwg') {
+        return NextResponse.json(
+          { success: false, message: 'Chỉ chấp nhận file .dwg' },
+          { status: 400 }
+        )
+      }
+      // DWG size limit: 50MB
+      const maxSize = 50 * 1024 * 1024
+      if (file.size > maxSize) {
+        return NextResponse.json(
+          { success: false, message: 'File DWG quá lớn. Tối đa 50MB' },
           { status: 400 }
         )
       }

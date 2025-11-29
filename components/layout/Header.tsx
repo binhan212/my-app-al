@@ -47,6 +47,7 @@ export function Header() {
     { href: '/gioi-thieu', label: 'GIỚI THIỆU' },
     { href: '/tin-tuc', label: 'TIN TỨC' },
     { href: '/du-an', label: 'DỰ ÁN' },
+    { href: '/ban-ve', label: 'BẢN VẼ' },
     { href: '/videos', label: 'VIDEO' },
     { href: '/y-kien', label: 'Ý KIẾN - KIẾN NGHỊ' },
   ]

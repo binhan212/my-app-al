@@ -14,6 +14,7 @@ import {
   RectangleStackIcon,
   TagIcon,
   InformationCircleIcon,
+  DocumentChartBarIcon,
 } from '@heroicons/react/24/outline'
 
 interface AdminSidebarProps {
@@ -62,6 +63,12 @@ const menuItems = [
     href: '/admin/videos',
     icon: VideoCameraIcon,
     roles: ['admin', 'editor']
+  },
+  {
+    title: 'Bản vẽ',
+    href: '/admin/drawings',
+    icon: DocumentChartBarIcon,
+    roles: ['admin']
   },
   {
     title: 'Ý kiến',

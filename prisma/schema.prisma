@@ -209,6 +209,21 @@ model About {
   @@map("about")
 }
 
+model Drawing {
+  id            Int           @id @default(autoincrement())
+  title         String        @db.VarChar(255)
+  dwg_file      String        @db.VarChar(500)
+  icon          String?       @db.Text
+  status        DrawingStatus @default(active)
+  display_order Int           @default(0)
+  created_at    DateTime      @default(now())
+  updated_at    DateTime      @updatedAt
+
+  @@index([status])
+  @@index([display_order])
+  @@map("drawings")
+}
+
 // Enums
 enum UserRole {
   admin
@@ -241,4 +256,9 @@ enum FeedbackStatus {
   pending
   answered
   archived
+}
+
+enum DrawingStatus {
+  active
+  inactive
 }

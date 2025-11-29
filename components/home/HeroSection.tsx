@@ -4,13 +4,13 @@ import { useState, useEffect } from 'react'
 import { useRouter } from 'next/navigation'
 import Link from 'next/link'
 import Image from 'next/image'
-import type { Slide, Post } from '@prisma/client'
+import type { Slide, Drawing } from '@prisma/client'
 
 interface HeroSectionProps {
   slides: Slide[]
   siteName: string
   siteDescription: string
-  recentPosts: (Post & { category: { id: number; name: string } | null })[]
+  recentDrawings: Drawing[]
 }
 
 function truncateTitle(title: string, maxWords: number = 5): string {
@@ -19,7 +19,7 @@ function truncateTitle(title: string, maxWords: number = 5): string {
   return words.slice(0, maxWords).join(' ') + '...'
 }
 
-export function HeroSection({ slides, siteName, siteDescription, recentPosts }: HeroSectionProps) {
+export function HeroSection({ slides, siteName, siteDescription, recentDrawings }: HeroSectionProps) {
   const router = useRouter()
   const [currentSlide, setCurrentSlide] = useState(0)
   const [searchType, setSearchType] = useState<'posts' | 'projects'>('posts')
@@ -149,46 +149,58 @@ export function HeroSection({ slides, siteName, siteDescription, recentPosts }: 
               </form>
             </div>
 
-            {/* Recent Posts Cards */}
+            {/* Recent Drawings Cards */}
             <div className="mt-10 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-6 items-stretch">
-              {recentPosts.slice(0, 5).map((post, index) => (
+              {recentDrawings.slice(0, 5).map((drawing, index) => (
                 <Link
-                  key={post.id}
-                  href={`/tin-tuc/${post.slug}`}
+                  key={drawing.id}
+                  href={`/ban-ve/${drawing.id}`}
                   className="bg-white rounded-xl shadow-md p-6 text-center hover:shadow-lg transition cursor-pointer"
                 >
                   <div className="w-20 h-20 mx-auto rounded-full bg-emerald-500 flex items-center justify-center mb-3 overflow-hidden relative">
-                    {post.cover_image ? (
-                      <Image 
-                        src={post.cover_image} 
-                        alt={post.title}
-                        fill
-                        className="object-cover"
-                        sizes="80px"
-                      />
+                    {drawing.icon ? (
+                      drawing.icon.trim().startsWith('<svg') ? (
+                        <div 
+                          className="w-12 h-12 text-white"
+                          dangerouslySetInnerHTML={{ __html: drawing.icon }} 
+                        />
+                      ) : drawing.icon.startsWith('/') || drawing.icon.startsWith('http') ? (
+                        <Image 
+                          src={drawing.icon} 
+                          alt={drawing.title}
+                          fill
+                          className="object-contain p-2"
+                          sizes="80px"
+                        />
+                      ) : (
+                        // Display as text/emoji
+                        <span className="text-4xl">{drawing.icon}</span>
+                      )
                     ) : (
-                      <span className="text-white font-bold text-lg">{index + 1}</span>
+                      <svg className="w-10 h-10 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+                      </svg>
                     )}
                   </div>
                   <h3 className="text-sky-700 font-semibold text-sm leading-tight">
-                    {truncateTitle(post.title, 5)}
+                    {truncateTitle(drawing.title, 5)}
                   </h3>
                 </Link>
               ))}
               
-              {/* Fill with empty cards if less than 5 posts */}
-              {recentPosts.length < 5 && Array.from({ length: 5 - recentPosts.length }).map((_, index) => (
+              {/* Fill with empty cards if less than 5 drawings */}
+              {recentDrawings.length < 5 && Array.from({ length: 5 - recentDrawings.length }).map((_, index) => (
                 <div
                   key={`empty-${index}`}
                   className="bg-white rounded-xl shadow-md p-6 text-center opacity-50"
                 >
                   <div className="w-20 h-20 mx-auto rounded-full bg-gray-300 flex items-center justify-center mb-3">
                     <svg className="w-10 h-10 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
                     </svg>
                   </div>
                   <h3 className="text-gray-400 font-semibold text-sm">
-                    Chưa có bài viết
+                    Chưa có bản vẽ
                   </h3>
                 </div>
               ))}
